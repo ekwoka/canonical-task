@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "types": ["node"],
+    "jsx": "preserve",
+    "typeRoots": ["./src/types"],
+    "target": "es2019",
+    "module": "es2022",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
