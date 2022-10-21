@@ -1,6 +1,5 @@
-import { Article } from '../utils/getArticles';
 import { h } from '../jsxFactory';
-import { getArticleDetails } from '../utils/getArticleDetails';
+import { Article, getArticleDetails } from '../utils';
 
 export const BlogCard = ({ article }: BlogCardProps): HTMLElement => {
   const { category, post_tag, topic, group } = getArticleDetails(article);

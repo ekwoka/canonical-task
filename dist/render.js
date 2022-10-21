@@ -37,6 +37,28 @@
     {}
   );
 
+  // src/utils/getArticles.ts
+  var getArticles = async () => {
+    try {
+      const response = await fetch(
+        "https://people.canonical.com/~anthonydillon/wp-json/wp/v2/posts.json",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json"
+          }
+        }
+      );
+      if (!response.ok)
+        throw new Error(response.statusText);
+      const articles = await response.json();
+      return articles;
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
+  };
+
   // src/components/BlogCard.tsx
   var BlogCard = ({ article }) => {
     const { category, post_tag, topic, group } = getArticleDetails(article);
@@ -81,30 +103,6 @@
 
   // src/index.tsx
   var import_promises = __require("node:fs/promises");
-
-  // src/utils/getArticles.ts
-  var getArticles = async () => {
-    try {
-      const response = await fetch(
-        "https://people.canonical.com/~anthonydillon/wp-json/wp/v2/posts.json",
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json"
-          }
-        }
-      );
-      if (!response.ok)
-        throw new Error(response.statusText);
-      const articles = await response.json();
-      return articles;
-    } catch (err) {
-      console.error(err);
-      return [];
-    }
-  };
-
-  // src/index.tsx
   var init = async () => {
     const articles = await getArticles();
     const content = /* @__PURE__ */ h(BlogList, {
