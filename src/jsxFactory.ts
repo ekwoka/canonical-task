@@ -1,31 +1,41 @@
-import { parseHTML } from 'linkedom';
-
-const { document } = parseHTML('');
-
-export const h: JSXFactory = (type, props = {}, ...children): HTMLElement => {
+export const h: JSXFactory = (type, props = {}, ...children): string => {
   if (typeof type === 'function') return type({ ...props, children });
-  const node = document.createElement(type);
-  if (props?.class) {
-    props.className = props.class;
-    delete props.class;
+  if (props?.className) {
+    props.class = props.className;
+    delete props.className;
   }
   if (props?.style) {
-    Object.assign(node.style, props.style);
-    delete props.style;
+    props.style = parseStyleToString(props.style);
   }
-  Object.assign(node, props);
-  node.append(...children.flat());
-  return node;
+  return `<${type} ${parsePropsToString(props ?? {})}>
+  ${
+    children.length
+      ? `${children.flat().join('\n')}
+</${type}>`
+      : ''
+  }`;
 };
+
+const parseStyleToString = (style: CSSStyleDeclaration | string): string =>
+  typeof style === 'string'
+    ? style
+    : Object.entries(style)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(';');
+
+const parsePropsToString = (props: Props): string =>
+  Object.entries(props)
+    .map(([key, value]) => `${key}="${value}"`)
+    .join(' ');
 
 type Props = {
   class?: string;
   className?: string;
-  style?: CSSStyleDeclaration;
+  style?: CSSStyleDeclaration | string;
 };
 
 type JSXFactory = (
-  type: string | ((props: unknown) => HTMLElement),
+  type: string | ((props: Props & { children: string[] }) => string),
   props?: Props,
-  ...children: HTMLElement[]
-) => HTMLElement;
+  ...children: string[]
+) => string;

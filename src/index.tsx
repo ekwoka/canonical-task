@@ -5,7 +5,7 @@ import { getArticles } from './utils/getArticles';
 
 const init = async (): Promise<void> => {
   const articles = await getArticles();
-  const content = (<BlogList articles={articles} />).outerHTML;
+  const content = (<BlogList articles={articles} />) as string;
   const index = await readFile('./src/static/index.html', 'utf8');
   await writeFile(
     './dist/index.html',

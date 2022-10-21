@@ -7,7 +7,7 @@ export const BlogCard = ({ article }: BlogCardProps): HTMLElement => {
   return (
     <div class="col-4 col-medium-2 p-card u-align--left p-card--highlighted p-card__post flex-column card-border__top">
       <p class="p-muted-heading">{group ?? topic ?? post_tag}</p>
-      <hr class="u-sv1"></hr>
+      <hr class="u-sv1" />
       <div class="flex-column full-height">
         <img
           class="p-card__image"
@@ -33,7 +33,7 @@ export const BlogCard = ({ article }: BlogCardProps): HTMLElement => {
           </em>
         </p>
       </div>
-      <hr class="u-sv1"></hr>
+      <hr class="u-sv1" />
       <span>{category}</span>
     </div>
   );
